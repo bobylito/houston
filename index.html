@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+
+<link rel="stylesheet" href="font/stylesheet.css" type="text/css" media="print,screen" title="fonts" charset="utf-8" />
+	<style type="text/css" media="screen">
+	/* <![CDATA[ */
+*{margin:0; padding:0; font-family: UbuntuRegular, UbuntuBeta, Ubuntu, 'Bitstream Vera Sans', 'DejaVu Sans', Tahoma, sans-serif;}
+body{ background:#333; color:#AAA; padding:35px 35px 0px 35px;}
+h1{margin:0.5em 0; color:#FFF}
+h2{margin:1em 0 0.5em 0; color:#AAF}
+a{color:#F5B32F}
+a:visited{color:#C28E25}
+ul li{list-style-type:none;}
+#principal{padding:20px;background-color:rgba(0,0,0,0.5); max-width:800px;margin:auto}
+#footer{text-align:center; margin: 5em auto 1em auto}
+	/* ]]> */
+	</style>
+</head>
+
+<body>
+<div id="principal">
+	<h1>Alexandre Stanislawski</h1>
+	<p>Hello I'm Alex, welcome to this page which shows most of my internet life.</p>
+	<p>My resume is available <strong class="important"><a href="http://bit.ly/cv_bob_v2">here</a></strong></p>
+	
+	
+	<h2>Here are a few things you might need to know about me</h2>
+	<p>
+		I'm not a CIA agent and I don't work at Buy More. I'm 27 and I live in Paris. I'm a simple and truly passionate software engineer.
+		Computers and hacking are only some pieces of my personnality and, amongst other stuff, I love to travel, 
+		to take photos, to watch movies and tv shows, and to read books and japanese comics (manga). 
+	</p>
+	<h2>Projects</h2>
+	<p>As far as I can remember, I always had a lot of ideas coming into my mind. Here are some of my last projects :</p>
+	<ul>
+		<li><a href="http://www.hackingparty.org">HackingParty.org</a> : Started as a gathering of geek friends, hackingparty.org is like a barcamp but with the idea of creating something</p>
+		<li><a href="http://code.google.com/p/littleslideshow4jquery/">Little Slide Show 4 jQuery</a> : A minimalistic plugin for creating a slideshow</p>
+		<li><a href="http://www.takyon.info/deploy/hackingParty/canvasXP/exp1.html">Little canvas shooter</a> : a shoot'm up made using html5 canvas</p>
+		<li><a href="http://github.com/bobylito/PHPCommitAutoUploader">PHPCommitAutoUploader</a> : a simple webhook which deploys your GitHub repository on your web host (I use it to deploy some projects)</li>
+	</ul>
+	<h2>Web life</h2>
+	<ul>
+		<li><a href="http://twitter.com/bobylito">Twitter (@bobylito)</a></li>
+		<li><a href="http://github.com/bobylito">Github</a></li>
+		<li><a href="http://www.flickr.com/photos/don_bobylito/">FlickR</a></li>
+		<li><a href="http://www.lastfm.fr/user/takyon">Last.fm</a></li>
+		<li><a href="http://bobylito.tumblr.com/">Tumblr</a></li>
+		<li><a href="http://www.facebook.com/bobylito">Facebook (it would have been easy to find it anyway :P)</a></li>
+	</ul>
+	
+	
+</div>
+
+<div id="footer">Powered by html/css/js (with <a href="http://www.jquery.com" target="_blank">jQuery</a>). The font used is <a href="font/UbuntuFontLicense1.0.txt" target="_blank">ubuntu</div>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js" type="text/javascript" language="javascript" charset="utf-8" ></script>
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+jQuery(function($){
+	jQuery.getJSON("http://jsfiddle.net/api/user/bobylito/demo/list.json?limit=5&callback=?", 
+		function(data) {
+			if(data.status =="ok" && data.list.length!=0){
+				var content = $("<ul></ul>"); 
+				for(var i = data.list.length-1; i>=0; i--){
+					var current = data.list[i];
+					var curContent = $('<li></li>').append(
+						$("<a></a>").attr({
+							href:current.url	
+						}).html(current.title)
+					);
+					content.append(curContent);
+				}
+				$("#principal").append("<h2>My latest jSFiddles</h2>").append(content);
+			}
+		});
+	jQuery.getJSON("http://github.com/api/v2/json/repos/show/bobylito?callback=?", 
+		function(data) {
+			if(data.repositories.length!=0){
+				var content = $("<ul></ul>"); 
+				for(var i = data.repositories.length-1; i>=0; i--){
+					var current = data.repositories[i];
+					var curContent = $('<li></li>').append(
+						$("<a></a>").attr({
+							href:current.url	
+						}).html(current.name)
+					).append(" : ").append(current.description);
+					content.append(curContent);
+				}
+				$("#principal").append("<h2>My github repositories</h2>").append(content);
+			}
+		});
+});
+// ]]>
+</script>
+</body>
+
+</html>
