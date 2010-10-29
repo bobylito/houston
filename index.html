@@ -7,34 +7,39 @@
 	<style type="text/css" media="screen">
 	/* <![CDATA[ */
 *{margin:0; padding:0; font-family: UbuntuRegular, UbuntuBeta, Ubuntu, 'Bitstream Vera Sans', 'DejaVu Sans', Tahoma, sans-serif;}
-body{ background:#333; color:#AAA; padding:35px 35px 0px 35px;}
-h1{margin:0.5em 0; color:#FFF}
-h2{margin:1em 0 0.5em 0; color:#AAF}
+body{ background:#333; color:#BBB; padding:35px 35px 0px 35px;}
+h1{margin:0.1em 0 0 0; color:#FFF; font-size:300%;font-family: UbuntuBold,UbuntuRegular 'Bitstream Vera Sans', 'DejaVu Sans', Tahoma, sans-serif;}
+h2{margin:1em 0 0.1em 0; color:#88B}
 a{color:#F5B32F}
 a:visited{color:#C28E25}
 ul li{list-style-type:none;}
+
 #principal{padding:20px;background-color:rgba(0,0,0,0.5); max-width:800px;margin:auto; position:relative}
-#footer{text-align:center; margin: 5em auto 1em auto}
-.avatar{position:absolute; top:1em; right:1em; border:3px solid #777}
+#footer{text-align:center; margin: 2em auto 1em auto}
+
+.avatar{position:absolute; top:1em; right:1em; border:3px solid #000}
+.aka{font-size:75%; margin:0 0 1em 0; color:#EEE}
+
 	/* ]]> */
 	</style>
 </head>
 
-<body>
+<body id="top">
+<a href="http://github.com/bobylito/houston"><img style="position: absolute; top: 0; left: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_left_green_007200.png" alt="Fork me on GitHub" /></a>
 <div id="principal">
-	<h1>Alexandre Stanislawski</h1>
+	<h1>Alexandre Stanislawski <sup>*</sup></h1>
+	<p class="aka">* : Also known as Maximilien, Andoche, TaKyon and Bobylito</p>
 	<img class="avatar" alt="Bobylito's GRavatar" title="Bobylito's GRavatar" src="http://www.gravatar.com/avatar/5bd4a014c260f733feecc1f3f146f7d7.png"/>
 	<p>Hello I'm Alex, welcome to this page which shows most of my internet life.</p>
 	<p>My resume is available <strong class="important"><a href="http://bit.ly/cv_bob_v2">here</a></strong></p>
 	
-	
-	<h2>Here are a few things you might need to know about me</h2>
+	<h2 id="infos">Here are a few things you might need to know about me</h2>
 	<p>
 		I'm not a CIA agent and I don't work at Buy More. I'm 27 and I live in Paris. I'm a simple and truly passionate software engineer.
 		Computers and hacking are only some pieces of my personnality and, amongst other stuff, I love to travel, 
 		to take photos, to watch movies and tv shows, and to read books and japanese comics (manga). 
 	</p>
-	<h2>Projects</h2>
+	<h2 id="projects">Projects</h2>
 	<p>As far as I can remember, I always had a lot of ideas coming into my mind. Here are some of my last projects :</p>
 	<ul>
 		<li><a href="http://www.hackingparty.org">HackingParty.org</a> : Started as a gathering of geek friends, hackingparty.org is like a barcamp but with the idea of creating something</p>
@@ -42,7 +47,7 @@ ul li{list-style-type:none;}
 		<li><a href="http://www.takyon.info/deploy/hackingParty/canvasXP/exp1.html">Little canvas shooter</a> : a shoot'm up made using html5 canvas</p>
 		<li><a href="http://github.com/bobylito/PHPCommitAutoUploader">PHPCommitAutoUploader</a> : a simple webhook which deploys your GitHub repository on your web host (I use it to deploy some projects)</li>
 	</ul>
-	<h2>Web life</h2>
+	<h2 id="weblife">Web life</h2>
 	<ul>
 		<li><a href="http://twitter.com/bobylito">Twitter (@bobylito)</a></li>
 		<li><a href="http://github.com/bobylito">Github</a></li>
@@ -50,9 +55,7 @@ ul li{list-style-type:none;}
 		<li><a href="http://www.lastfm.fr/user/takyon">Last.fm</a></li>
 		<li><a href="http://bobylito.tumblr.com/">Tumblr</a></li>
 		<li><a href="http://www.facebook.com/bobylito">Facebook (it would have been easy to find it anyway :P)</a></li>
-	</ul>
-	
-	
+	</ul>	
 </div>
 
 <div id="footer">Powered by html/css/js (with <a href="http://www.jquery.com" target="_blank">jQuery</a>). The font used is <a href="font/UbuntuFontLicense1.0.txt" target="_blank">ubuntu</div>
@@ -61,6 +64,14 @@ ul li{list-style-type:none;}
 <script type="text/javascript" language="javascript" charset="utf-8">
 // <![CDATA[
 jQuery(function($){
+	var fiddles = $("<h2></h2>").attr("id", "fiddles").html("My latest jSFiddles");
+	var github = $("<h2></h2>").attr("id", "github").html("My github repositories");
+	
+	$("#principal").append(github).append(fiddles);
+	
+	var fiddlesLoading = $("<p>Loading last fiddles</p>").insertAfter(fiddles);
+	var githubLoading = $("<p>Loading github repositories</p>").insertAfter(github);
+	
 	jQuery.getJSON("http://jsfiddle.net/api/user/bobylito/demo/list.json?limit=5&callback=?", 
 		function(data) {
 			if(data.status =="ok" && data.list.length!=0){
@@ -74,9 +85,15 @@ jQuery(function($){
 					);
 					content.append(curContent);
 				}
-				$("#principal").append("<h2>My latest jSFiddles</h2>").append(content);
+				content.hide();
+				fiddlesLoading.slideUp('slow',function(){
+					$(this).detach();
+					fiddles.after(content);
+					content.slideDown('slow');
+				});
 			}
 		});
+	
 	jQuery.getJSON("http://github.com/api/v2/json/repos/show/bobylito?callback=?", 
 		function(data) {
 			if(data.repositories.length!=0){
@@ -90,9 +107,15 @@ jQuery(function($){
 					).append(" : ").append(current.description);
 					content.append(curContent);
 				}
-				$("#principal").append("<h2>My github repositories</h2>").append(content);
+				content.hide();
+				githubLoading.slideUp('slow',function(){
+					$(this).detach();
+					github.after(content);
+					content.slideDown('slow');
+				});
 			}
 		});
+	
 });
 // ]]>
 </script>
