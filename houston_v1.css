@@ -1,0 +1,15 @@
+*{margin:0; padding:0; font-family: UbuntuRegular, UbuntuBeta, Ubuntu, 'Bitstream Vera Sans', 'DejaVu Sans', Tahoma, sans-serif;}
+
+body{ background:#333; color:#BBB; padding:35px 35px 0px 35px;}
+h1, h2{font-family: UbuntuBold, UbuntuRegular, 'Bitstream Vera Sans', 'DejaVu Sans', Tahoma, sans-serif}
+h1{margin:0.1em 0 0 0; color:#FFF; font-size:300%;}
+h2{margin:1em 0 0.1em 0; color:#88B}
+a{color:#F5B32F}
+a:visited{color:#C28E25}
+ul li{list-style-type:none;}
+
+#principal{padding:20px;background-color:rgba(0,0,0,0.5); max-width:800px;margin:auto; position:relative}
+#footer{text-align:center; margin: 2em auto 1em auto}
+
+.avatar{position:absolute; top:1em; right:1em; border:3px solid #000}
+.aka{font-size:75%; margin:0 0 1em 0; color:#EEE}
